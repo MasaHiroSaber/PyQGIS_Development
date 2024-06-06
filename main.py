@@ -19,13 +19,14 @@ class PyQGIS_Development(QMainWindow, Ui_MainWindow):
         GUI.GUIPreview.load_preview(self)
         self.load_qss()
         self.setAcceptDrops(True)
+        self.rightMenu = Fun.menu_func.menu_provider(self)
+        self.layerTreeView.setMenuProvider(self.rightMenu)
 
     def load_qss(self):
         qss = QSSLoader(f"{os.path.dirname(sys.argv[0])}/ui/style/light.qss").load()
         self.ui.centralwidget.setStyleSheet(qss)
 
     def dragEnterEvent(self, file, QDragEnterEvent=None):
-        print("dragEnterEvent\n")
         if file.mimeData().hasUrls():
             file.accept()
         else:
@@ -37,9 +38,9 @@ class PyQGIS_Development(QMainWindow, Ui_MainWindow):
         for filePath in filePathList:
             filePath: str = filePath.replace('/', '//')
             if filePath.split(".")[-1] in ['tif', 'tiff', 'TIF', 'TIFF']:
-                Fun.fileFunction.open_raster_file(self, filePath)
+                Fun.file_func.open_raster_file(self, filePath)
             elif filePath.split(".")[-1] in ['shp']:
-                Fun.fileFunction.open_vector_file(self, filePath)
+                Fun.file_func.open_vector_file(self, filePath)
             elif filePath == '':
                 pass
             else:
@@ -51,6 +52,5 @@ if __name__ == '__main__':
     qgs.initQgis()
     app = PyQGIS_Development(qgs)
     app.show()
-
     qgs.exec_()
     qgs.exitQgis()

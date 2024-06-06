@@ -45,7 +45,7 @@ def open_raster_file(main, path=None):
 def open_vector_file(main, path=None):
     if path is None:
         filepath = FileUtil.select_single_file(main, 'Vector File(*.shp)', 'last_dir_contour_shp')
-        if filepath == '' or not filepath.endswith('.shp'):
+        if filepath == '':
             return
     else:
         filepath = path
