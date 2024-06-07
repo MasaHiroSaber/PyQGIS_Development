@@ -24,6 +24,7 @@ class PyQGIS_Development(QMainWindow, Ui_MainWindow):
         self.setAcceptDrops(True)
         self.rightMenu = pre_func.menu_func.menu_provider(self)
         self.layerTreeView.setMenuProvider(self.rightMenu)
+    
     def load_qss(self):
         qss = QSSLoader(f"{os.path.dirname(sys.argv[0])}/ui/style/light.qss").load()
         self.ui.centralwidget.setStyleSheet(qss)
@@ -53,11 +54,12 @@ if __name__ == '__main__':
     qgs = QgsApplication([], False)
     qgs.initQgis()
     app = PyQGIS_Development(qgs)
+    
     fontDb = QFontDatabase()
     fontID = fontDb.addApplicationFont(":/font/font/MiSans-Regular.ttf")
-    fontFamilies = fontDb.applicationFontFamilies(fontID)
-    # print(fontFamilies) # ['MiSans']
+    fontFamilies = fontDb.applicationFontFamilies(fontID)    # print(fontFamilies) #['MiSans']
     app.setFont(QFont(fontFamilies[0]))
+    
     app.setWindowTitle("PyQGIS Development")
     icon = QtGui.QIcon()
     icon.addPixmap(QtGui.QPixmap(":/icon/icon/3d.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
