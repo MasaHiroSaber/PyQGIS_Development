@@ -3,7 +3,7 @@ QWidget, QFrame {
   border: none;
 }
 QTabWidget, QLabel, QToolButton, QPushButton, QLineEdit, QRadioButton {
-  font-family: 'Microsoft YaHei', 'PingFang SC','SimSun','Arial', sans-serif;
+  font-family: 'MiSans';
 }
 /* 输入框 */
 QLineEdit {

@@ -289,24 +289,6 @@ class Ui_MainWindow(object):
         self.label_coords_name = QtWidgets.QLabel(self.frame_coords)
         self.label_coords_name.setObjectName("label_coords_name")
         self.horizontalLayout_8.addWidget(self.label_coords_name)
-        self.edit_coords_value = QtWidgets.QLineEdit(self.frame_coords)
-        self.edit_coords_value.setStyleSheet("padding-left: 1px;\n"
-"padding-right: 1px;")
-        self.edit_coords_value.setObjectName("edit_coords_value")
-        self.horizontalLayout_8.addWidget(self.edit_coords_value)
-        self.label_coords_default_name = QtWidgets.QLabel(self.frame_coords)
-        self.label_coords_default_name.setStyleSheet("padding: 0px;\n"
-"margin-left: 5px")
-        self.label_coords_default_name.setObjectName("label_coords_default_name")
-        self.horizontalLayout_8.addWidget(self.label_coords_default_name)
-        self.edit_coords_default_value = QtWidgets.QLineEdit(self.frame_coords)
-        self.edit_coords_default_value.setStyleSheet("padding-left: 1px;\n"
-"padding-right:1px;")
-        self.edit_coords_default_value.setObjectName("edit_coords_default_value")
-        self.horizontalLayout_8.addWidget(self.edit_coords_default_value)
-        self.label_crs = QtWidgets.QLabel(self.frame_coords)
-        self.label_crs.setObjectName("label_crs")
-        self.horizontalLayout_8.addWidget(self.label_crs)
         self.horizontalLayout_7.addWidget(self.frame_coords)
         self.verticalLayout_2.addWidget(self.frame_prev_bottom)
         self.tabWidget.addTab(self.tab_data_preview, "")
@@ -336,8 +318,6 @@ class Ui_MainWindow(object):
         self.button_zoom_out.setText(_translate("MainWindow", "..."))
         self.button_refresh.setText(_translate("MainWindow", "..."))
         self.label_coords_name.setText(_translate("MainWindow", "Current_coords"))
-        self.label_coords_default_name.setText(_translate("MainWindow", "Default_coords"))
-        self.label_crs.setText(_translate("MainWindow", "CRS"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_data_preview), _translate("MainWindow", "数据预览"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_others), _translate("MainWindow", "Others"))
 import rc_rc

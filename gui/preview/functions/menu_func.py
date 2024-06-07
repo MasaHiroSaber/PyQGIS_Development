@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QMenu, QMessageBox
 from qgis.PyQt.QtWidgets import QAction
 from qgis._core import QgsLayerTreeGroup, QgsLayerTree, QgsLayerTreeNode, QgsProject
 from qgis._gui import *
-
+from gui.preview.functions.dialog import *
 from gui.preview.functions.button_func import delete_layer
 
 
@@ -32,7 +32,7 @@ class menu_provider(QgsLayerTreeViewMenuProvider):
                 self.actionGroupSelect = self.actions.actionGroupSelected()
                 menu.addAction(self.actionGroupSelect)
 
-                actionDeleteSelectLayers = QAction("删除选中图层", menu)
+                actionDeleteSelectLayers = QAction("Remove Selected Layers", menu)
                 actionDeleteSelectLayers.triggered.connect(self.delete_selected_layer)
                 menu.addAction(actionDeleteSelectLayers)
 
@@ -45,12 +45,11 @@ class menu_provider(QgsLayerTreeViewMenuProvider):
                     self.actionRenameGroup = self.actions.actionRenameGroupOrLayer(menu)
                     menu.addAction(self.actionRenameGroup)
 
-                    actionDeleteGroup = QAction("删除组", menu)
+                    actionDeleteGroup = QAction("Delete Group", menu)
                     actionDeleteGroup.triggered.connect(lambda: self.delete_group(group))
                     menu.addAction(actionDeleteGroup)
 
                 elif QgsLayerTree.isLayer(node):
-                    print("Layer:" + str(QgsLayerTree.isLayer(node)))
                     self.actionMoveToTop = self.actions.actionMoveToTop(menu)
                     menu.addAction(self.actionMoveToTop)
 
@@ -69,16 +68,14 @@ class menu_provider(QgsLayerTreeViewMenuProvider):
             print(traceback.format_exc())
 
     def delete_group(self, group: QgsLayerTreeGroup):
-        deleteRes = QMessageBox.question(self.mainWindow, '信息', "确定要删除组？", QMessageBox.Yes | QMessageBox.No,
-                                         QMessageBox.No)
-        if deleteRes == QMessageBox.Yes:
+        deleteRes = messageDialog(self.mainWindow,'信息','确定要删除组？')
+        if deleteRes:
             for layer in group.findLayers():
                 delete_layer(self, layer.layer())
         QgsProject.instance().layerTreeRoot().removeChildNode(group)
 
     def delete_selected_layer(self):
-        deleteRes = QMessageBox.question(self.mainWindow, '信息', "确定要删除选定的图层？",
-                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-        if deleteRes == QMessageBox.Yes:
+        deleteRes = messageDialog(self.mainWindow, '信息', '确定要删除选定的图层？')
+        if deleteRes:
             for layer in self.layerTreeView.selectedLayers():
                 delete_layer(self, layer)

@@ -740,40 +740,6 @@
                 </property>
                </widget>
               </item>
-              <item>
-               <widget class="QLineEdit" name="edit_coords_value">
-                <property name="styleSheet">
-                 <string notr="true">padding-left: 1px;
-padding-right: 1px;</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_coords_default_name">
-                <property name="styleSheet">
-                 <string notr="true">padding: 0px;
-margin-left: 5px</string>
-                </property>
-                <property name="text">
-                 <string>Default_coords</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="edit_coords_default_value">
-                <property name="styleSheet">
-                 <string notr="true">padding-left: 1px;
-padding-right:1px;</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_crs">
-                <property name="text">
-                 <string>CRS</string>
-                </property>
-               </widget>
-              </item>
              </layout>
             </widget>
            </item>

@@ -5,13 +5,6 @@ from PyQt5.QtWidgets import QFileDialog
 
 
 def select_single_file(weight, suffix_filter: str, last_dir_key: str):
-    """
-    打开单个文件
-    :param weight:
-    :param suffix_filter:
-    :param last_dir_key:
-    :return:
-    """
     # 历史目录
     settings = QSettings('PyQGIS_Development')
     last_dir = settings.value(last_dir_key, QDir().homePath())

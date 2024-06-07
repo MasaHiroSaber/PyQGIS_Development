@@ -3,19 +3,16 @@ from os.path import basename
 from PyQt5.QtGui import QFont, QColor
 from osgeo import gdal
 from qgis._core import QgsRasterLayer, QgsProject, QgsVectorLayer, QgsPalLayerSettings, QgsTextFormat, Qgis, \
-    QgsVectorLayerSimpleLabeling
+    QgsVectorLayerSimpleLabeling, QgsMapLayer
 from qgis._gui import QgsMapCanvas
 
 import utils.fileUtil as FileUtil
 
 
-def open_raster_file(main, path=None):
-    """
-    打开栅格文件
-    :param main:
-    :return:
-    """
-    # 选择文件
+def open_raster_file(main, path=None, firstAddLayer=False):
+    # 打开栅格文件
+
+
     if path is None:
         filepath = FileUtil.select_single_file(main, 'Raster File(*.tif;*tiff;*TIF;*TIFF)', 'last_dir_raster')
         if filepath == '':
@@ -34,6 +31,8 @@ def open_raster_file(main, path=None):
     # 渲染栅格图像，渲染到最上层
     is_first_add_layer = len(canvas.layers()) == 0
     canvas.setLayers([layer] + canvas.layers())
+    
+
     if is_first_add_layer:
         canvas.setExtent(layer.extent())
         canvas.setDestinationCrs(layer.crs())

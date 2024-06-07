@@ -1,8 +1,10 @@
 from PyQt5.QtCore import Qt
 from qgis._core import *
+from qgis.gui import *
 
 from gui.preview.functions.file_func import *
 from gui.preview.functions.button_func import *
+from gui.preview.functions.coords_func import *
 
 
 def load_preview(main):
@@ -18,6 +20,8 @@ def load_preview(main):
     init_qgis_map(main)
 
     bind_func(main)
+
+    bind_label(main)
 
 
 def declaring_variable(main):
@@ -35,6 +39,7 @@ def init_preview(main):
 def init_qgis_map(main):
     main.preview_canvas = QgsMapCanvas()
     main.preview_canvas.setDestinationCrs(QgsCoordinateReferenceSystem("EPSG:4326"))
+    main.ui.label_coords_name.setText("坐标系: WGS 84 / EPSG:4326")
     main.preview_canvas.setCanvasColor(Qt.white)
     main.preview_canvas.enableAntiAliasing(True)
     main.preview_canvas.setFocus()
@@ -71,3 +76,8 @@ def bind_func(main):
     _ui.button_refresh.clicked.connect(lambda self: slot_refresh_canvas(main.preview_canvas))
     _ui.button_prev_clear.clicked.connect(lambda self: clear_all_layer(main))
     _ui.button_prev_remove.clicked.connect(lambda self: delete_selected_layer(main))
+
+
+def bind_label(main):
+    main.preview_canvas.xyCoordinates.connect(lambda point: showXY(main, point))
+    main.preview_canvas.destinationCrsChanged.connect(lambda: showCrs(main))

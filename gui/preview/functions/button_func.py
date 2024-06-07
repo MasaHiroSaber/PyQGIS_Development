@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMessageBox
 from qgis._core import QgsProject
 from qgis._gui import *
+from gui.preview.functions.dialog import *
 
 
 def slot_set_map_tool(canvas: QgsMapCanvas, tool):
@@ -19,21 +20,27 @@ def slot_refresh_canvas(canvas: QgsMapCanvas):
 
 def clear_all_layer(self):
     if len(QgsProject.instance().mapLayers().values()) == 0:
-        QMessageBox.about(self, '信息', '您的图层为空')
+        messageDialog(self, '警告', '您的图层为空')
+        # QMessageBox.about(self, '信息', '您的图层为空')
     else:
-        deleteRes = QMessageBox.question(self, '信息', "确定要删除所有图层？", QMessageBox.Yes | QMessageBox.No,
-                                         QMessageBox.No)
-        if deleteRes == QMessageBox.Yes:
+        deleteRes = messageDialog(self, '信息', "确定要删除所有图层？")
+
+        if deleteRes:
             for layer in QgsProject.instance().mapLayers().values():
                 delete_layer(self, layer)
+            successInfoBar(self, '操作成功', '已清除所有图层')
 
 
 def delete_selected_layer(self):
-    deleteRes = QMessageBox.question(self, '信息', "确定要删除选定的图层？", QMessageBox.Yes | QMessageBox.No,
-                                     QMessageBox.No)
-    if deleteRes == QMessageBox.Yes:
-        for layer in self.layerTreeView.selectedLayers():
-            delete_layer(self, layer)
+    if len(QgsProject.instance().mapLayers().values()) == 0:
+        messageDialog(self, '信息', '您的图层为空')
+    else:
+        deleteRes = QMessageBox.question(self, '信息', "确定要删除选定的图层？", QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.No)
+
+        if deleteRes == QMessageBox.Yes:
+            for layer in self.layerTreeView.selectedLayers():
+                delete_layer(self, layer)
 
 
 def delete_layer(self, layer_name):
