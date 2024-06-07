@@ -20,7 +20,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_9">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -38,6 +38,11 @@
     </property>
     <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="font">
+       <font>
+        <family>MiSans</family>
+       </font>
+      </property>
       <property name="currentIndex">
        <number>0</number>
       </property>
@@ -72,6 +77,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>70</height>
+           </size>
+          </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
@@ -101,6 +112,12 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>70</height>
+              </size>
              </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
@@ -152,7 +169,7 @@
                   <widget class="QToolButton" name="button_add_raster">
                    <property name="font">
                     <font>
-                     <family>Microsoft YaHei</family>
+                     <family>MiSans</family>
                     </font>
                    </property>
                    <property name="text">
@@ -180,7 +197,7 @@
                   <widget class="QToolButton" name="button_add_vector">
                    <property name="font">
                     <font>
-                     <family>Microsoft YaHei</family>
+                     <family>MiSans</family>
                     </font>
                    </property>
                    <property name="text">
@@ -202,6 +219,178 @@
                    <property name="autoRaise">
                     <bool>true</bool>
                    </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>10</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QGroupBox" name="groupBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>MiSans</family>
+                     <pointsize>9</pointsize>
+                     <weight>50</weight>
+                     <italic>false</italic>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                   <property name="acceptDrops">
+                    <bool>false</bool>
+                   </property>
+                   <property name="title">
+                    <string>编辑</string>
+                   </property>
+                   <property name="flat">
+                    <bool>false</bool>
+                   </property>
+                   <property name="checkable">
+                    <bool>false</bool>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_10">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item alignment="Qt::AlignBottom">
+                     <widget class="QToolButton" name="button_feature_editor">
+                      <property name="font">
+                       <font>
+                        <family>MiSans</family>
+                        <pointsize>8</pointsize>
+                        <weight>50</weight>
+                        <italic>false</italic>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>编辑矢量</string>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../resource/rc.qrc">
+                        <normaloff>:/icon/icon/edit.svg</normaloff>:/icon/icon/edit.svg</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>25</width>
+                        <height>25</height>
+                       </size>
+                      </property>
+                      <property name="checkable">
+                       <bool>true</bool>
+                      </property>
+                      <property name="popupMode">
+                       <enum>QToolButton::DelayedPopup</enum>
+                      </property>
+                      <property name="toolButtonStyle">
+                       <enum>Qt::ToolButtonTextUnderIcon</enum>
+                      </property>
+                      <property name="autoRaise">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item alignment="Qt::AlignBottom">
+                     <widget class="QToolButton" name="button_feature_select">
+                      <property name="font">
+                       <font>
+                        <family>MiSans</family>
+                        <pointsize>8</pointsize>
+                        <weight>50</weight>
+                        <italic>false</italic>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>选择要素</string>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../resource/rc.qrc">
+                        <normaloff>:/icon/icon/operation.svg</normaloff>:/icon/icon/operation.svg</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>25</width>
+                        <height>25</height>
+                       </size>
+                      </property>
+                      <property name="checkable">
+                       <bool>true</bool>
+                      </property>
+                      <property name="popupMode">
+                       <enum>QToolButton::DelayedPopup</enum>
+                      </property>
+                      <property name="toolButtonStyle">
+                       <enum>Qt::ToolButtonTextUnderIcon</enum>
+                      </property>
+                      <property name="autoRaise">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item alignment="Qt::AlignBottom">
+                     <widget class="QToolButton" name="button_delete_feature_select">
+                      <property name="font">
+                       <font>
+                        <family>MiSans</family>
+                        <pointsize>8</pointsize>
+                        <weight>50</weight>
+                        <italic>false</italic>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>删除选中要素</string>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../resource/rc.qrc">
+                        <normaloff>:/icon/icon/file-delete.svg</normaloff>:/icon/icon/file-delete.svg</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>25</width>
+                        <height>25</height>
+                       </size>
+                      </property>
+                      <property name="popupMode">
+                       <enum>QToolButton::DelayedPopup</enum>
+                      </property>
+                      <property name="toolButtonStyle">
+                       <enum>Qt::ToolButtonTextUnderIcon</enum>
+                      </property>
+                      <property name="autoRaise">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
                 </layout>
@@ -343,7 +532,7 @@
                    <widget class="QLabel" name="label">
                     <property name="font">
                      <font>
-                      <family>Microsoft YaHei</family>
+                      <family>MiSans</family>
                      </font>
                     </property>
                     <property name="text">
@@ -634,6 +823,12 @@
                  <property name="frameShadow">
                   <enum>QFrame::Raised</enum>
                  </property>
+                 <property name="lineWidth">
+                  <number>2</number>
+                 </property>
+                 <property name="midLineWidth">
+                  <number>0</number>
+                 </property>
                  <layout class="QVBoxLayout" name="preview_qgis_map">
                   <property name="spacing">
                    <number>0</number>
@@ -665,13 +860,13 @@
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>34</height>
+            <height>30</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>34</height>
+            <height>30</height>
            </size>
           </property>
           <property name="frameShape">
@@ -698,6 +893,11 @@
            </property>
            <item>
             <widget class="QLabel" name="label_tips_prev">
+             <property name="font">
+              <font>
+               <family>MiSans</family>
+              </font>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -735,6 +935,11 @@
               </property>
               <item>
                <widget class="QLabel" name="label_coords_name">
+                <property name="font">
+                 <font>
+                  <family>MiSans</family>
+                 </font>
+                </property>
                 <property name="text">
                  <string>Current_coords</string>
                 </property>
@@ -748,9 +953,14 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_others">
+      <widget class="QWidget" name="tab_tools_1">
        <attribute name="title">
-        <string>Others</string>
+        <string>功能1</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_tools_2">
+       <attribute name="title">
+        <string>功能2</string>
        </attribute>
       </widget>
      </widget>

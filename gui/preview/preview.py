@@ -39,7 +39,6 @@ def init_preview(main):
 def init_qgis_map(main):
     main.preview_canvas = QgsMapCanvas()
     main.preview_canvas.setDestinationCrs(QgsCoordinateReferenceSystem("EPSG:4326"))
-    main.ui.label_coords_name.setText("坐标系: WGS 84 / EPSG:4326")
     main.preview_canvas.setCanvasColor(Qt.white)
     main.preview_canvas.enableAntiAliasing(True)
     main.preview_canvas.setFocus()
@@ -64,7 +63,7 @@ def init_qgis_map(main):
     main.model.setAutoCollapseLegendNodes(10)  # 当节点数大于等于10时自动折叠
     main.layerTreeView.setModel(main.model)
     main.layerTreeBridge = QgsLayerTreeMapCanvasBridge(QgsProject.instance().layerTreeRoot(), main.preview_canvas, main)
-
+    main.ui.label_coords_name.setText("坐标系(默认): WGS 84 / EPSG:4326")
 
 def bind_func(main):
     _ui = main.ui

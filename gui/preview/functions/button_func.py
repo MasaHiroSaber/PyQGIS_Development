@@ -35,12 +35,14 @@ def delete_selected_layer(self):
     if len(QgsProject.instance().mapLayers().values()) == 0:
         messageDialog(self, '信息', '您的图层为空')
     else:
-        deleteRes = QMessageBox.question(self, '信息', "确定要删除选定的图层？", QMessageBox.Yes | QMessageBox.No,
-                                         QMessageBox.No)
+        if self.layerTreeView.currentIndex().isValid():
+            deleteRes = messageDialog(self, '信息', '确定要删除选定的图层？')
+            if deleteRes:
+                for layer in self.layerTreeView.selectedLayers():
+                    delete_layer(self, layer)
 
-        if deleteRes == QMessageBox.Yes:
-            for layer in self.layerTreeView.selectedLayers():
-                delete_layer(self, layer)
+        else:
+            errorInfoBar(self, '错误', '您未选择图层')
 
 
 def delete_layer(self, layer_name):
@@ -48,3 +50,4 @@ def delete_layer(self, layer_name):
     QgsProject.instance().removeMapLayer(layer_name)
     self.preview_canvas.refresh()
     return 0
+
