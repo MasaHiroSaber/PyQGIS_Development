@@ -5,6 +5,7 @@ from qgis.gui import *
 from gui.preview.functions.file_func import *
 from gui.preview.functions.button_func import *
 from gui.preview.functions.coords_func import *
+from gui.preview.functions.menu_func import menu_provider
 
 
 def load_preview(main):
@@ -18,6 +19,10 @@ def load_preview(main):
     init_preview(main)
 
     init_qgis_map(main)
+
+    init_vector_tools(main)
+
+    init_rightMenu(main)
 
     bind_func(main)
 
@@ -64,6 +69,23 @@ def init_qgis_map(main):
     main.layerTreeView.setModel(main.model)
     main.layerTreeBridge = QgsLayerTreeMapCanvasBridge(QgsProject.instance().layerTreeRoot(), main.preview_canvas, main)
     main.ui.label_coords_name.setText("坐标系(默认): WGS 84 / EPSG:4326")
+
+
+def init_rightMenu(main):
+    main.rightMenu = menu_provider(main)
+    main.layerTreeView.setMenuProvider(main.rightMenu)
+
+
+def init_vector_tools(main):
+    main.ui.button_feature_editor.setEnabled(False)
+    main.ui.button_feature_select.setEnabled(False)
+    main.ui.button_delete_feature_select.setEnabled(False)
+    main.editTempLayer: QgsVectorLayer = None
+    main.layerTreeView.clicked.connect(lambda self: layer_clicked(main))
+    main.ui.button_feature_editor.clicked.connect(lambda: feature_editor(main))
+    main.ui.button_feature_select.clicked.connect(lambda: feature_selected(main))
+    main.ui.button_delete_feature_select.clicked.connect(lambda: feature_delete_selected(main))
+
 
 def bind_func(main):
     _ui = main.ui

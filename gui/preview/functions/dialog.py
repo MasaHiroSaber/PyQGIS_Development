@@ -10,35 +10,37 @@ def messageDialog(self, title, content):
         return False
 
 
-def successInfoBar(self, title, content):
+def successInfoBar(self, title, content, duration=2000):
     InfoBar.success(
         title=title,
         content=content,
         orient=Qt.Horizontal,
         isClosable=True,
         position=InfoBarPosition.TOP_RIGHT,
-        duration=3000,
+        duration=duration,
         parent=self
     )
 
-def errorInfoBar(self, title, content):
+
+def errorInfoBar(self, title, content, duration=2000):
     InfoBar.error(
         title=title,
         content=content,
         orient=Qt.Horizontal,
         isClosable=True,
         position=InfoBarPosition.TOP_RIGHT,
-        duration=-1,
+        duration=duration,
         parent=self
     )
-    
-def warningInfoBar(self, title, content):
+
+
+def warningInfoBar(self, title, content, duration=2000):
     InfoBar.warning(
         title=title,
         content=content,
         orient=Qt.Horizontal,
         isClosable=True,
         position=InfoBarPosition.TOP_RIGHT,
-        duration=3000,
+        duration=duration,
         parent=self
     )

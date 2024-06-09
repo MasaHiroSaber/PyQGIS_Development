@@ -1,13 +1,31 @@
+from PyQt5.QtCore import QMimeData
 from os.path import basename
 from PyQt5.QtGui import QFont, QColor
 from osgeo import gdal
+from gui.preview.functions.dialog import *
 from qgis._core import QgsRasterLayer, QgsProject, QgsVectorLayer, QgsPalLayerSettings, QgsTextFormat, Qgis, \
     QgsVectorLayerSimpleLabeling, QgsMapLayer, QgsCoordinateReferenceSystem, QgsRectangle, QgsVectorDataProvider, \
     QgsWkbTypes
 from qgis._gui import QgsMapCanvas
 import utils.fileUtil as FileUtil
 import os.path as osp
+import os
+from osgeo import gdal
+from qgis.core import (
+    QgsVectorLayer,
+    QgsProject,
+    QgsPalLayerSettings,
+    QgsTextFormat,
+    QgsVectorLayerSimpleLabeling,
+    QgsMapLayer,
+    Qgis
+)
+from qgis.gui import QgsMapCanvas
+from PyQt5.QtGui import QFont, QColor
+from os.path import basename, splitext
+import os
 
+os.environ['OGR_GEOMETRY_ACCEPT_UNCLOSED_RING'] = 'NO'
 
 qgisDataTypeDict = {
     0 : "UnknownDataType",
@@ -58,43 +76,113 @@ def open_raster_file(main, path=None, firstAddLayer=False):
     canvas.refresh()
 
 
+# def open_vector_file(main, path=None):
+#     if path is None:
+#         filepath = FileUtil.select_single_file(main, 'Vector File(*.shp;*.osm)', 'last_dir_contour_shp')
+#         if filepath == '':
+#             return
+#     else:
+#         filepath = path
+# 
+#     gdal.SetConfigOption('SHAPE_RESTORE_SHX', 'YES')
+#     layer = QgsVectorLayer(filepath, basename(filepath), 'ogr')
+# 
+#     if not layer.isValid():
+#         return False
+# 
+#     # 设置标注
+#     layer_setting = QgsPalLayerSettings()
+#     layer_setting.drawLabels = False
+#     layer_setting.fieldName = layer.fields()[1].name()
+# 
+#     # 文本样式设置
+#     text_format = QgsTextFormat()
+#     text_format.setFont(QFont("Arial", 12))
+#     text_format.setColor(QColor(255, 255, 255))
+#     layer_setting.setFormat(text_format)
+#     layer_setting.placement = Qgis.LabelPlacement.Line
+#     layer_setting.placementFlags = QgsPalLayerSettings.AboveLine
+# 
+#     layer.setLabelsEnabled(True)
+#     layer.setLabeling(QgsVectorLayerSimpleLabeling(layer_setting))
+#     layer.triggerRepaint(True)
+# 
+#     canvas: QgsMapCanvas = main.preview_canvas
+#     QgsProject.instance().addMapLayer(layer)
+#     canvas.setLayers([layer] + canvas.layers())
+#     canvas.setDestinationCrs(layer.crs())
+#     canvas.setExtent(layer.extent())
+#     canvas.refresh()
+
+
 def open_vector_file(main, path=None):
     if path is None:
-        filepath = FileUtil.select_single_file(main, 'Vector File(*.shp)', 'last_dir_contour_shp')
-        if filepath == '':
+        filepath = FileUtil.select_single_file(main, 'Vector File(*.shp;*.osm)', 'last_dir_contour_shp')
+        if not filepath:
             return
     else:
         filepath = path
 
-    gdal.SetConfigOption('SHAPE_RESTORE_SHX', 'YES')
-    layer = QgsVectorLayer(filepath, basename(filepath), 'ogr')
-
-    if not layer.isValid():
+    _, ext = splitext(filepath)
+    if ext.lower() not in ['.shp', '.osm']:
+        warningInfoBar(main,'警告',f"不支持此文件: {ext}")
         return False
 
-    # 设置标注
-    layer_setting = QgsPalLayerSettings()
-    layer_setting.drawLabels = True
-    layer_setting.fieldName = layer.fields()[1].name()
+    if ext.lower() == '.shp':
+        gdal.SetConfigOption('SHAPE_RESTORE_SHX', 'YES')
+        layer_names = [basename(filepath)]
 
-    # 文本样式设置
-    text_format = QgsTextFormat()
-    text_format.setFont(QFont("Arial", 12))
-    text_format.setColor(QColor(255, 255, 255))
-    layer_setting.setFormat(text_format)
-    layer_setting.placement = Qgis.LabelPlacement.Line
-    layer_setting.placementFlags = QgsPalLayerSettings.AboveLine
+    if ext.lower() == '.osm':
+        datasource = gdal.OpenEx(filepath)
+        if datasource is None:
+            errorInfoBar(main,'错误',f"无法打开此OSM文件: {filepath}")
+            return False
 
-    layer.setLabelsEnabled(True)
-    layer.setLabeling(QgsVectorLayerSimpleLabeling(layer_setting))
-    layer.triggerRepaint(True)
+        layer_names = [datasource.GetLayerByIndex(i).GetName() for i in range(datasource.GetLayerCount())]
+        datasource = None
 
-    canvas: QgsMapCanvas = main.preview_canvas
-    QgsProject.instance().addMapLayer(layer)
-    canvas.setLayers([layer] + canvas.layers())
-    canvas.setDestinationCrs(layer.crs())
-    canvas.setExtent(layer.extent())
-    canvas.refresh()
+
+    for layer_name in layer_names:
+        full_layer_name = f"{basename(filepath)}::{layer_name}"
+        if ext.lower() == '.shp':
+            layer = QgsVectorLayer(filepath, basename(filepath), 'ogr')
+        if ext.lower() == '.osm':
+            layer = QgsVectorLayer(f"{filepath}|layername={layer_name}", full_layer_name, 'ogr')
+
+        if not layer.isValid():
+            errorInfoBar(main,'错误',f"加载OSM图层失败: {full_layer_name}")
+            continue
+
+        # 设置标注
+        layer_setting = QgsPalLayerSettings()
+        layer_setting.drawLabels = False
+        if layer.fields():
+            layer_setting.fieldName = layer.fields()[1].name()
+        else:
+            warningInfoBar(main,'警告',"图层中没有可用的字段")
+            continue
+
+        # 文本样式设置
+        text_format = QgsTextFormat()
+        text_format.setFont(QFont("Arial", 12))
+        text_format.setColor(QColor(255, 255, 255))
+        layer_setting.setFormat(text_format)
+        layer_setting.placement = Qgis.LabelPlacement.Line
+        layer_setting.placementFlags = QgsPalLayerSettings.AboveLine
+
+        layer.setLabelsEnabled(True)
+        layer.setLabeling(QgsVectorLayerSimpleLabeling(layer_setting))
+        layer.triggerRepaint(True)
+
+        # 将图层添加到地图画布和项目中
+        canvas: QgsMapCanvas = main.preview_canvas
+        QgsProject.instance().addMapLayer(layer)
+        canvas.setLayers([layer] + canvas.layers())
+        canvas.setDestinationCrs(layer.crs())
+        canvas.setExtent(layer.extent())
+        canvas.refresh()
+
+
 
 def getRasterLayersAttrs(rasterLayer: QgsRasterLayer):
     
@@ -134,7 +222,9 @@ def getVectorLayersAttrs(vectorLayer: QgsVectorLayer):
 
 
 def getFileSize(filePath):
-    fsize = osp.getsize(filePath)  # 返回的是字节大小
+    original_filepath = filePath.split('|')[0]
+    fsize = osp.getsize(original_filepath)  # 返回的是字节大小
+
 
     if fsize < 1024:
         return f"{round(fsize, 2)}Byte"
@@ -149,4 +239,23 @@ def getFileSize(filePath):
             else:
                 return f"{round(MBX/1024,2)}Gb"
 
+def drag_enter_event(self, file):
+    if file.mimeData().hasUrls():
+        file.accept()
+    else:
+        file.ignore()
+
+def drop_event(self, file):
+    mimeData: QMimeData = file.mimeData()
+    filePathList = [u.path()[1:] for u in file.mimeData().urls()]
+    for filePath in filePathList:
+        filePath: str = filePath.replace('/', '//')
+        if filePath.split(".")[-1] in ['tif', 'tiff', 'TIF', 'TIFF']:
+            open_raster_file(self, filePath)
+        elif filePath.split(".")[-1] in ['shp','osm']:
+            open_vector_file(self, filePath)
+        elif filePath == '':
+            pass
+        else:
+            warningInfoBar(self, '警告', f'{filePath}为不支持的文件类型，目前支持栅格影像和shp矢量')
 

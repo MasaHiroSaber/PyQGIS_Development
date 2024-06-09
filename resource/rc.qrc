@@ -124,6 +124,9 @@
     <file>icon/zoomIn.png</file>
     <file>icon/zoomOut.png</file>
   </qresource>
+  <qresource prefix="logo">
+    <file>logo/cug.png</file>
+  </qresource>
   <qresource prefix="font">
     <file>font/MiSans-Regular.ttf</file>
   </qresource>

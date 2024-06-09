@@ -2,11 +2,10 @@ import os
 import sys
 
 from IPython.external.qt_for_kernel import QtGui
-from PyQt5.QtCore import QMimeData
 from PyQt5.QtGui import QFontDatabase, QFont
-from PyQt5.QtWidgets import QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QMainWindow
 from qgis._core import *
-from gui.preview.functions.dialog import *
+
 import gui as GUI
 import gui.preview.functions as pre_func
 from ui.DevUI import Ui_MainWindow
@@ -22,47 +21,32 @@ class PyQGIS_Development(QMainWindow, Ui_MainWindow):
         GUI.GUIPreview.load_preview(self)
         self.load_qss()
         self.setAcceptDrops(True)
-        self.rightMenu = pre_func.menu_func.menu_provider(self)
-        self.layerTreeView.setMenuProvider(self.rightMenu)
-    
+        
+
     def load_qss(self):
         qss = QSSLoader(f"{os.path.dirname(sys.argv[0])}/ui/style/light.qss").load()
         self.ui.centralwidget.setStyleSheet(qss)
 
-    def dragEnterEvent(self, file, QDragEnterEvent=None):
-        if file.mimeData().hasUrls():
-            file.accept()
-        else:
-            file.ignore()
+    def dragEnterEvent(self, event):
+        pre_func.file_func.drag_enter_event(self, event)
 
-    def dropEvent(self, file, QDropEvent=None):
-        mimeData: QMimeData = file.mimeData()
-        filePathList = [u.path()[1:] for u in file.mimeData().urls()]
-        for filePath in filePathList:
-            filePath: str = filePath.replace('/', '//')
-            if filePath.split(".")[-1] in ['tif', 'tiff', 'TIF', 'TIFF']:
-                pre_func.file_func.open_raster_file(self, filePath)
-            elif filePath.split(".")[-1] in ['shp']:
-                pre_func.file_func.open_vector_file(self, filePath)
-            elif filePath == '':
-                pass
-            else:
-                warningInfoBar(self, '警告',f'{filePath}为不支持的文件类型，目前支持栅格影像和shp矢量')
+    def dropEvent(self, event):
+        pre_func.file_func.drop_event(self, event)
 
 
 if __name__ == '__main__':
     qgs = QgsApplication([], False)
     qgs.initQgis()
     app = PyQGIS_Development(qgs)
-    
+
     fontDb = QFontDatabase()
     fontID = fontDb.addApplicationFont(":/font/font/MiSans-Regular.ttf")
-    fontFamilies = fontDb.applicationFontFamilies(fontID)    # print(fontFamilies) #['MiSans']
+    fontFamilies = fontDb.applicationFontFamilies(fontID)  # print(fontFamilies) #['MiSans']
     app.setFont(QFont(fontFamilies[0]))
-    
+
     app.setWindowTitle("PyQGIS Development")
     icon = QtGui.QIcon()
-    icon.addPixmap(QtGui.QPixmap(":/icon/icon/3d.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+    icon.addPixmap(QtGui.QPixmap(":/logo/logo/cug.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
     app.setWindowIcon(icon)
 
     app.show()

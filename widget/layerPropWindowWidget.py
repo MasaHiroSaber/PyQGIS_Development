@@ -23,24 +23,24 @@ class LayerPropWindowWidget(QDialog, Ui_LayerProp):
         self.renderBar = self.comboTabWidget.findChild(QTabBar)
         self.renderBar.hide()
         self.listWidget.setCurrentRow(0)
-        self.initInfomationTab()
-        self.decideRasterNVector(0)
+        self.init_infomation_tab()
+        self.decide_raster_n_vector(0)
         self.fontDb = QFontDatabase()
         self.fontID = self.fontDb.addApplicationFont(":/font/font/MiSans-Regular.ttf")
         self.fontFamilies = self.fontDb.applicationFontFamilies(self.fontID)    # print(fontFamilies) #['MiSans']
         self.setFont(QFont(self.fontFamilies[0]))
 
     def bind_func(self):
-        self.listWidget.itemClicked.connect(self.listWidgetItemClicked)
-        self.okPb.clicked.connect(lambda: self.renderApplyPbClicked(needClose=True))
+        self.listWidget.itemClicked.connect(self.list_widget_item_clicked)
+        self.okPb.clicked.connect(lambda: self.render_apply_pb_clicked(needClose=True))
         self.cancelPb.clicked.connect(self.close)
-        self.applyPb.clicked.connect(lambda: self.renderApplyPbClicked(needClose=False))
-        self.vecterRenderCB.currentIndexChanged.connect(self.vecterRenderCBChanged)
+        self.applyPb.clicked.connect(lambda: self.render_apply_pb_clicked(needClose=False))
+        self.vecterRenderCB.currentIndexChanged.connect(self.vecter_render_cb_changed)
 
-    def vecterRenderCBChanged(self):
+    def vecter_render_cb_changed(self):
         self.comboTabWidget.setCurrentIndex(self.vecterRenderCB.currentIndex())
 
-    def initInfomationTab(self):
+    def init_infomation_tab(self):
         if type(self.layer) == QgsRasterLayer:
             rasterLayerDict = getRasterLayersAttrs(self.layer)
             self.rasterNameLabel.setText(rasterLayerDict['name'])
@@ -77,7 +77,7 @@ class LayerPropWindowWidget(QDialog, Ui_LayerProp):
                                                                                  self.layer.renderer())
             self.cateRenderLayout.addWidget(self.vectorCateGoryRenderWidget)
 
-    def decideRasterNVector(self, index):
+    def decide_raster_n_vector(self, index):
         if index == 0:
             if type(self.layer) == QgsRasterLayer:
                 self.tabWidget.setCurrentIndex(0)
@@ -89,11 +89,11 @@ class LayerPropWindowWidget(QDialog, Ui_LayerProp):
             elif type(self.layer) == QgsVectorLayer:
                 self.tabWidget.setCurrentIndex(3)
 
-    def listWidgetItemClicked(self, item: QListWidgetItem):
+    def list_widget_item_clicked(self, item: QListWidgetItem):
         tempIndex = self.listWidget.indexFromItem(item).row()
-        self.decideRasterNVector(tempIndex)
+        self.decide_raster_n_vector(tempIndex)
     
-    def renderApplyPbClicked(self, needClose=False):
+    def render_apply_pb_clicked(self, needClose=False):
         if self.tabWidget.currentIndex() <= 1:
             print("没有在视图里，啥也不干")
         elif type(self.layer) == QgsRasterLayer:

@@ -69,11 +69,11 @@ class menu_provider(QgsLayerTreeViewMenuProvider):
                     
                     if layer.type() == QgsMapLayerType.VectorLayer:
                         actionOpenAttributeDialog = QAction('打开属性表', menu)
-                        actionOpenAttributeDialog.triggered.connect(lambda : self.openAttributeDialog(layer))
+                        actionOpenAttributeDialog.triggered.connect(lambda : self.open_attribute_dialog(layer))
                         menu.addAction(actionOpenAttributeDialog)
                     
                     actionOpenLayerProp = QAction('图层属性',menu)
-                    actionOpenLayerProp.triggered.connect(lambda : self.openLayerPropTriggered(layer))
+                    actionOpenLayerProp.triggered.connect(lambda : self.open_layer_prop_triggered(layer))
                     menu.addAction(actionOpenLayerProp)
 
                 return menu
@@ -93,14 +93,15 @@ class menu_provider(QgsLayerTreeViewMenuProvider):
         if deleteRes:
             for layer in self.layerTreeView.selectedLayers():
                 delete_layer(self, layer)
-    def openLayerPropTriggered(self, layer):
+                
+    def open_layer_prop_triggered(self, layer):
         try:
             self.lpt = LayerPropWindowWidget(layer,self.mainWindow)
             self.lpt.show()
         except:
             print(traceback.format_exc())
             
-    def openAttributeDialog(self, layer):
+    def open_attribute_dialog(self, layer):
         try:
             self.att = AttributeDialog(self.mainWindow, layer)
             self.att.show()
