@@ -10,11 +10,7 @@ from customFunc.custom_func import *
 
 
 def load_preview(main):
-    """
-    装载预览界面
-    :param main:
-    :return:
-    """
+
     declaring_variable(main)
 
     init_preview(main)
