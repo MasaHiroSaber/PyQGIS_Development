@@ -67,8 +67,12 @@ def layer_clicked(self):
 
 def feature_editor(self):
     if self.ui.button_feature_editor.isChecked():
-        self.editTempLayer: QgsVectorLayer = self.layerTreeView.currentLayer()
-        self.editTempLayer.startEditing()
+        try:
+            self.editTempLayer: QgsVectorLayer = self.layerTreeView.currentLayer()
+            self.editTempLayer.startEditing()
+        except:
+            warningInfoBar(self,'警告','请检查要编辑的图层是否有误')
+            return False
     else:
         saveFeatureEdit = messageDialog(self, '保存编辑', '确定要将编辑内容保存到内存吗？')
         if saveFeatureEdit:

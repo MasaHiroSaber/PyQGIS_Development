@@ -80,7 +80,7 @@
         </size>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>3</number>
        </property>
        <widget class="QWidget" name="rasterLayerInfoTab">
         <attribute name="title">
@@ -693,6 +693,11 @@
                <string>分类渲染</string>
               </property>
              </item>
+             <item>
+              <property name="text">
+               <string>分级渲染</string>
+              </property>
+             </item>
             </widget>
            </item>
            <item>
@@ -717,6 +722,16 @@
               <layout class="QVBoxLayout" name="verticalLayout_6">
                <item>
                 <layout class="QVBoxLayout" name="cateRenderLayout"/>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="graduatedRender">
+              <attribute name="title">
+               <string>Tab 3</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <item>
+                <layout class="QVBoxLayout" name="graduatedRenderLayout"/>
                </item>
               </layout>
              </widget>

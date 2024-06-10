@@ -21,7 +21,6 @@ class PyQGIS_Development(QMainWindow, Ui_MainWindow):
         GUI.GUIPreview.load_preview(self)
         self.load_qss()
         self.setAcceptDrops(True)
-        
 
     def load_qss(self):
         qss = QSSLoader(f"{os.path.dirname(sys.argv[0])}/ui/style/light.qss").load()
@@ -32,6 +31,8 @@ class PyQGIS_Development(QMainWindow, Ui_MainWindow):
 
     def dropEvent(self, event):
         pre_func.file_func.drop_event(self, event)
+    
+    
 
 
 if __name__ == '__main__':

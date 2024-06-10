@@ -157,7 +157,7 @@ def open_vector_file(main, path=None):
         layer_setting = QgsPalLayerSettings()
         layer_setting.drawLabels = False
         if layer.fields():
-            layer_setting.fieldName = layer.fields()[1].name()
+            layer_setting.fieldName = layer.fields()[0].name()
         else:
             warningInfoBar(main,'警告',"图层中没有可用的字段")
             continue

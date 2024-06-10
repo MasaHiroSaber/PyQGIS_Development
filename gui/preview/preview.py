@@ -5,7 +5,8 @@ from qgis.gui import *
 from gui.preview.functions.file_func import *
 from gui.preview.functions.button_func import *
 from gui.preview.functions.coords_func import *
-from gui.preview.functions.menu_func import menu_provider
+from gui.preview.functions.menu_func import *
+from customFunc.custom_func import *
 
 
 def load_preview(main):
@@ -21,6 +22,8 @@ def load_preview(main):
     init_qgis_map(main)
 
     init_vector_tools(main)
+    
+    init_custom_tools(main)
 
     init_rightMenu(main)
 
@@ -74,6 +77,9 @@ def init_qgis_map(main):
 def init_rightMenu(main):
     main.rightMenu = menu_provider(main)
     main.layerTreeView.setMenuProvider(main.rightMenu)
+
+def init_custom_tools(main):
+    main.ui.button_tool_access_analysis.clicked.connect(lambda :open_accessibility_analysis_widget(main))
 
 
 def init_vector_tools(main):

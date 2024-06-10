@@ -1,2 +1,3 @@
 from .attributeDialog import AttributeDialog
 from .layerPropWindowWidget import LayerPropWindowWidget
+from .accessibilityAnalysisWidget import AccessibilityAnalysisWidget

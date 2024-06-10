@@ -301,9 +301,9 @@
                      <number>0</number>
                     </property>
                     <item alignment="Qt::AlignBottom">
-                     <widget class="QToolButton" name="button_city_tool">
+                     <widget class="QToolButton" name="button_tool_access_analysis">
                       <property name="text">
-                       <string>城市......</string>
+                       <string>可达性分析工具</string>
                       </property>
                       <property name="icon">
                        <iconset resource="../resource/rc.qrc">

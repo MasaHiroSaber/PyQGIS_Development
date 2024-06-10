@@ -2,8 +2,8 @@ from PyQt5.QtGui import QFontDatabase
 from PyQt5.QtWidgets import QDialog, QTabBar, QListWidgetItem
 from qgis._core import QgsStyle
 from qgis._gui import QgsSingleSymbolRendererWidget, QgsCategorizedSymbolRendererWidget, \
-    QgsRendererRasterPropertiesWidget
-
+    QgsRendererRasterPropertiesWidget, QgsGraduatedSymbolRendererWidget
+from gui.preview.functions.dialog import *
 from gui.preview.functions.file_func import *
 from ui.LayerPropWindow import Ui_LayerProp
 
@@ -27,7 +27,7 @@ class LayerPropWindowWidget(QDialog, Ui_LayerProp):
         self.decide_raster_n_vector(0)
         self.fontDb = QFontDatabase()
         self.fontID = self.fontDb.addApplicationFont(":/font/font/MiSans-Regular.ttf")
-        self.fontFamilies = self.fontDb.applicationFontFamilies(self.fontID)    # print(fontFamilies) #['MiSans']
+        self.fontFamilies = self.fontDb.applicationFontFamilies(self.fontID)  # print(fontFamilies) #['MiSans']
         self.setFont(QFont(self.fontFamilies[0]))
 
     def bind_func(self):
@@ -77,6 +77,11 @@ class LayerPropWindowWidget(QDialog, Ui_LayerProp):
                                                                                  self.layer.renderer())
             self.cateRenderLayout.addWidget(self.vectorCateGoryRenderWidget)
 
+            self.vectorGraduatedRenderWidget = QgsGraduatedSymbolRendererWidget(self.layer, QgsStyle.defaultStyle(),
+                                                                                self.layer.renderer())
+
+            self.graduatedRenderLayout.addWidget(self.vectorGraduatedRenderWidget)
+
     def decide_raster_n_vector(self, index):
         if index == 0:
             if type(self.layer) == QgsRasterLayer:
@@ -92,7 +97,7 @@ class LayerPropWindowWidget(QDialog, Ui_LayerProp):
     def list_widget_item_clicked(self, item: QListWidgetItem):
         tempIndex = self.listWidget.indexFromItem(item).row()
         self.decide_raster_n_vector(tempIndex)
-    
+
     def render_apply_pb_clicked(self, needClose=False):
         if self.tabWidget.currentIndex() <= 1:
             print("没有在视图里，啥也不干")
@@ -104,8 +109,10 @@ class LayerPropWindowWidget(QDialog, Ui_LayerProp):
             self.layer: QgsVectorLayer
             if self.comboTabWidget.currentIndex() == 0:
                 renderer = self.vectorSingleRenderWidget.renderer()
-            else:
+            elif self.comboTabWidget.currentIndex() == 1:
                 renderer = self.vectorCateGoryRenderWidget.renderer()
+            else:
+                renderer = self.vectorGraduatedRenderWidget.renderer()
             self.layer.setRenderer(renderer)
             self.layer.triggerRepaint()
         self.parentWindow.preview_canvas.refresh()
