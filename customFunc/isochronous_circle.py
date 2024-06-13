@@ -40,3 +40,5 @@ def isochronous_circle(self, layer_facility: QgsVectorLayer, layer_area: QgsVect
 
     accessibility_analysis(self, layer_facility, layer_user, travel_mode, travel_cost='duration',
                            file_name='isochronous_circle')
+
+    warningInfoBar(self.parentWindow, '正在处理', '请耐心等待处理')
