@@ -1,5 +1,4 @@
 from PyQt5.QtCore import QMimeData
-from os.path import basename
 from PyQt5.QtGui import QFont, QColor
 from osgeo import gdal
 from gui.preview.functions.dialog import *
@@ -7,23 +6,16 @@ from qgis._core import QgsRasterLayer, QgsProject, QgsVectorLayer, QgsPalLayerSe
     QgsVectorLayerSimpleLabeling, QgsMapLayer, QgsCoordinateReferenceSystem, QgsRectangle, QgsVectorDataProvider, \
     QgsWkbTypes
 from qgis._gui import QgsMapCanvas
+from os.path import basename, splitext
 import utils.fileUtil as FileUtil
 import os.path as osp
 import os
-from osgeo import gdal
-from qgis.core import (
-    QgsVectorLayer,
-    QgsProject,
-    QgsPalLayerSettings,
-    QgsTextFormat,
-    QgsVectorLayerSimpleLabeling,
-    QgsMapLayer,
-    Qgis
-)
-from qgis.gui import QgsMapCanvas
-from PyQt5.QtGui import QFont, QColor
-from os.path import basename, splitext
-import os
+
+
+
+
+
+
 
 os.environ['OGR_GEOMETRY_ACCEPT_UNCLOSED_RING'] = 'NO'
 
@@ -76,43 +68,6 @@ def open_raster_file(main, path=None, firstAddLayer=False):
     canvas.refresh()
 
 
-# def open_vector_file(main, path=None):
-#     if path is None:
-#         filepath = FileUtil.select_single_file(main, 'Vector File(*.shp;*.osm)', 'last_dir_contour_shp')
-#         if filepath == '':
-#             return
-#     else:
-#         filepath = path
-# 
-#     gdal.SetConfigOption('SHAPE_RESTORE_SHX', 'YES')
-#     layer = QgsVectorLayer(filepath, basename(filepath), 'ogr')
-# 
-#     if not layer.isValid():
-#         return False
-# 
-#     # 设置标注
-#     layer_setting = QgsPalLayerSettings()
-#     layer_setting.drawLabels = False
-#     layer_setting.fieldName = layer.fields()[1].name()
-# 
-#     # 文本样式设置
-#     text_format = QgsTextFormat()
-#     text_format.setFont(QFont("Arial", 12))
-#     text_format.setColor(QColor(255, 255, 255))
-#     layer_setting.setFormat(text_format)
-#     layer_setting.placement = Qgis.LabelPlacement.Line
-#     layer_setting.placementFlags = QgsPalLayerSettings.AboveLine
-# 
-#     layer.setLabelsEnabled(True)
-#     layer.setLabeling(QgsVectorLayerSimpleLabeling(layer_setting))
-#     layer.triggerRepaint(True)
-# 
-#     canvas: QgsMapCanvas = main.preview_canvas
-#     QgsProject.instance().addMapLayer(layer)
-#     canvas.setLayers([layer] + canvas.layers())
-#     canvas.setDestinationCrs(layer.crs())
-#     canvas.setExtent(layer.extent())
-#     canvas.refresh()
 
 
 def open_vector_file(main, path=None):

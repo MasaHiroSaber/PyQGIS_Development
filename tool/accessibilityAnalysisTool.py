@@ -4,7 +4,7 @@ from ui.AccessibilityAnalysisTool import Ui_accessibility_analysis_widget
 
 
 class AccessibilityAnalysisWidget(QDialog, Ui_accessibility_analysis_widget):
-    def __init__(self, parent):
+    def __init__(self, parent=None):
         super(AccessibilityAnalysisWidget, self).__init__(parent)
         self.travel_cost = 'duration'
         self.travel_mode = 'walking'
@@ -17,20 +17,20 @@ class AccessibilityAnalysisWidget(QDialog, Ui_accessibility_analysis_widget):
 
 
     def get_tool_mode(self):
-        travel_mode_dict = {
+        self.travel_mode_dict = {
             '步行': 'walking',
             '驾车': 'driving',
         }
 
-        travel_cost_dict = {
+        self.travel_cost_dict = {
             '时间': 'duration',
             '距离': 'distance'
         }
         self.travel_mode_text = self.travel_mode_comboBox.currentText()
         self.travel_cost_text = self.travel_cost_comboBox.currentText()
 
-        self.travel_mode = travel_mode_dict[self.travel_mode_text]
-        self.travel_cost = travel_cost_dict[self.travel_cost_text]
+        self.travel_mode = self.travel_mode_dict[self.travel_mode_text]
+        self.travel_cost = self.travel_cost_dict[self.travel_cost_text]
 
     def get_layer(self):
         self.facility_layer = self.layer_facility_ComboBox.currentLayer()

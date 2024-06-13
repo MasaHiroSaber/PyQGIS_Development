@@ -1,1 +1,2 @@
 from .accessibility_analysis import accessibility_analysis
+from .isochronous_circle import isochronous_circle

@@ -1,6 +1,6 @@
 import os
 import sys
-
+import shutil
 from IPython.external.qt_for_kernel import QtGui
 from PyQt5.QtGui import QFontDatabase, QFont
 from PyQt5.QtWidgets import QMainWindow
@@ -11,7 +11,6 @@ import gui.preview.functions as pre_func
 from ui.DevUI import Ui_MainWindow
 from utils.qss_loader import QSSLoader
 
-
 class PyQGIS_Development(QMainWindow, Ui_MainWindow):
     def __init__(self, app: QgsApplication):
         super(PyQGIS_Development, self).__init__()
@@ -20,6 +19,7 @@ class PyQGIS_Development(QMainWindow, Ui_MainWindow):
         self.ui.setupUi(self)
         GUI.GUIPreview.load_preview(self)
         self.load_qss()
+        self.makeDir()
         self.setAcceptDrops(True)
 
     def load_qss(self):
@@ -31,8 +31,20 @@ class PyQGIS_Development(QMainWindow, Ui_MainWindow):
 
     def dropEvent(self, event):
         pre_func.file_func.drop_event(self, event)
-    
-    
+        
+    def makeDir(self):
+        path = "./output/temp"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        else:
+            shutil.rmtree(path)
+            os.mkdir(path)
+
+
+
+
+
+
 
 
 if __name__ == '__main__':

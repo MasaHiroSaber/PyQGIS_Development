@@ -75,7 +75,8 @@ def init_rightMenu(main):
     main.layerTreeView.setMenuProvider(main.rightMenu)
 
 def init_custom_tools(main):
-    main.ui.button_tool_access_analysis.clicked.connect(lambda :open_accessibility_analysis_widget(main))
+    main.ui.button_tool_access_analysis.clicked.connect(lambda: open_accessibility_analysis_widget(main))
+    main.ui.button_tool_isochronous_circle.clicked.connect(lambda: open_isochronous_circle_dialog(main))
 
 
 def init_vector_tools(main):

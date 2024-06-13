@@ -1,5 +1,4 @@
 import os
-
 import requests
 from PyQt5.QtCore import QVariant
 from qgis._core import QgsVectorLayer, QgsFields, QgsField, QgsFeature, QgsGeometry, QgsPointXY, QgsVectorFileWriter

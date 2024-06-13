@@ -49,6 +49,14 @@ class Ui_accessibility_analysis_widget(object):
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_5.setSpacing(0)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.label_5 = QtWidgets.QLabel(self.frame_5)
+        font = QtGui.QFont()
+        font.setFamily("MiSans")
+        font.setPointSize(8)
+        self.label_5.setFont(font)
+        self.label_5.setWordWrap(True)
+        self.label_5.setObjectName("label_5")
+        self.horizontalLayout_5.addWidget(self.label_5)
         self.horizontalLayout_3.addWidget(self.frame_5)
         self.frame_6 = QtWidgets.QFrame(self.frame_3)
         self.frame_6.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -252,6 +260,7 @@ class Ui_accessibility_analysis_widget(object):
     def retranslateUi(self, accessibility_analysis_widget):
         _translate = QtCore.QCoreApplication.translate
         accessibility_analysis_widget.setWindowTitle(_translate("accessibility_analysis_widget", "可达性分析工具"))
+        self.label_5.setText(_translate("accessibility_analysis_widget", "PS：由于高德API限制，每秒最高并发为30次，所以数据量比较大时需要等待比较久的时间"))
         self.button_accessibility_analysis_ok.setText(_translate("accessibility_analysis_widget", "运行"))
         self.label_3.setText(_translate("accessibility_analysis_widget", "用户点图层"))
         self.label_4.setText(_translate("accessibility_analysis_widget", "统计方式"))

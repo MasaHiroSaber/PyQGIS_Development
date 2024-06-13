@@ -170,6 +170,7 @@
                    <property name="font">
                     <font>
                      <family>MiSans</family>
+                     <pointsize>9</pointsize>
                     </font>
                    </property>
                    <property name="text">
@@ -198,6 +199,7 @@
                    <property name="font">
                     <font>
                      <family>MiSans</family>
+                     <pointsize>9</pointsize>
                     </font>
                    </property>
                    <property name="text">
@@ -275,6 +277,12 @@
                      <height>70</height>
                     </size>
                    </property>
+                   <property name="font">
+                    <font>
+                     <family>MiSans</family>
+                     <pointsize>9</pointsize>
+                    </font>
+                   </property>
                    <property name="autoFillBackground">
                     <bool>false</bool>
                    </property>
@@ -302,6 +310,12 @@
                     </property>
                     <item alignment="Qt::AlignBottom">
                      <widget class="QToolButton" name="button_tool_access_analysis">
+                      <property name="font">
+                       <font>
+                        <family>MiSans</family>
+                        <pointsize>9</pointsize>
+                       </font>
+                      </property>
                       <property name="text">
                        <string>可达性分析工具</string>
                       </property>
@@ -324,9 +338,15 @@
                      </widget>
                     </item>
                     <item alignment="Qt::AlignBottom">
-                     <widget class="QToolButton" name="button_city_tool_2">
+                     <widget class="QToolButton" name="button_tool_isochronous_circle">
+                      <property name="font">
+                       <font>
+                        <family>MiSans</family>
+                        <pointsize>9</pointsize>
+                       </font>
+                      </property>
                       <property name="text">
-                       <string>城市.....</string>
+                       <string>区域等时圈构建</string>
                       </property>
                       <property name="icon">
                        <iconset resource="../resource/rc.qrc">
@@ -647,6 +667,7 @@
                     <property name="font">
                      <font>
                       <family>MiSans</family>
+                      <pointsize>9</pointsize>
                      </font>
                     </property>
                     <property name="text">
@@ -1010,6 +1031,7 @@
              <property name="font">
               <font>
                <family>MiSans</family>
+               <pointsize>10</pointsize>
               </font>
              </property>
              <property name="text">
@@ -1052,6 +1074,7 @@
                 <property name="font">
                  <font>
                   <family>MiSans</family>
+                  <pointsize>10</pointsize>
                  </font>
                 </property>
                 <property name="text">

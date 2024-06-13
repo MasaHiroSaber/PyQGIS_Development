@@ -8,8 +8,8 @@ from qgis._core import QgsLayerTreeGroup, QgsLayerTree, QgsLayerTreeNode, QgsPro
 from qgis._gui import *
 from gui.preview.functions.dialog import *
 from gui.preview.functions.button_func import delete_layer
-from widget import LayerPropWindowWidget
-from widget import AttributeDialog
+from tool import LayerPropWindowWidget
+from tool import AttributeDialog
 
 
 class menu_provider(QgsLayerTreeViewMenuProvider):
