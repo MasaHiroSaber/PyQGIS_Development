@@ -31,8 +31,8 @@ def accessibility_analysis(self, layer_facility, layer_user, travel_mode='walkin
             response = requests.get(url, params=params)
             answer = response.json()
             path_destination = answer["route"]['destination']
-            path_distance = answer['route']['paths'][0]['distance']  #m
-            path_duration = answer['route']['paths'][0]['duration']  #s
+            path_distance = answer['route']['paths'][0]['distance']  # m
+            path_duration = answer['route']['paths'][0]['duration']  # s
 
             up_path[path_destination] = {}
             up_path[path_destination]['distance'] = eval(path_distance)
@@ -103,16 +103,11 @@ def get_point_coords(layer):
     point_coords = {}
 
     for feature in layer.getFeatures():
-        # 获取要素的属性ID
         feature_id = feature[0]
-
-        # 获取几何对象
         geometry = feature.geometry()
         if geometry.isMultipart():
-            # 多部件几何
             points = geometry.asMultiPoint()
         else:
-            # 单部件几何
             points = geometry.asPoint()
 
         point_coords.setdefault(feature_id, []).append(points)
